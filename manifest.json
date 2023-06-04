@@ -1,9 +1,9 @@
 {
   "theme_color" : "#E47575",
   "background_color" : "#E47575",
-  "display" : "standalone",
-  "scope" : "https://josilenonascimento.github.io/kk-calc/",
-  "start_url" : "https://josilenonascimento.github.io/kk-calc/",
+  "display" : "standalone", 
+  "id": "/kk-calc/",
+  "start_url" : "/kk-calc/",
   "name" : "KK Calc",
   "short_name" : "KK Calc",
   "description" : "Calculadora de Profit",
