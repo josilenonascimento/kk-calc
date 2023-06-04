@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KK Calc Profit</title>
+  <link rel="stylesheet" href="assets/css/style-v001.css">
+  <link rel="manifest" href="manifest.json">
+
+  
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/icons/icon-48x48.png">
+
+  <meta name="theme-color" content="#E47575">
+ 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div id="app" class="wrapper">
+      <div class="logo-wrapper">
+        <div class="logo">
+          <img src="./assets/icons/icon-96x96.png">
+        </div>
+      </div>
+      
+      <div class="content">
+        
+        <div id="screen1" v-show="screen1">
+          <h1>KK Calc Profit</h1>
+          <p>Calculadora de Profit</p>
+
+          <h3>Informe o valor de 1KK<br> de GOLD (BRL):</h3>
+
+          <div class="price">
+            R$ <input type="text" placeholder="0,00" ref="price" id="price" maxlength="4"  v-model="goldPrice">
+          </div>
+          
+          <button type="button" @click="getPriceGold">Próximo</button>
+        </div>
+
+        <div id="screen2" v-show="screen2">
+          <h1>KK Calc Profit</h1>
+          <p>Calculadora de Profit</p>
+
+          <h3>Informe seu Farming<br> diário em GOLD: (Ex: 1kk)</h3>
+
+          <div class="price">
+            GOLD <input type="text" placeholder="50 KK" ref="gold" id="gold" maxlength="5" v-model="goldFarming">
+          </div>
+          
+          <button type="button" @click="calc">Calcular</button>
+        </div>
+        
+        <div id="screen3" v-show="screen3">
+          <h1>KK Calc Profit</h1>
+          <p>Calculadora de Profit</p>
+
+          <h2>Profit em GOLD:</h2>
+          <ul>
+            <li>Diário: {{this.goldPerDay}}</li>
+            <li>Semanal: {{this.goldPerWeek}}</li>
+            <li>Mensal: {{this.goldPerMonth}}</li>
+          </ul>
+
+          <h2>Profit em BRL:</h2>
+          <ul>
+            <li>Diário: {{this.goldPerDayBRL}}</li>
+            <li>Semanal: {{this.goldPerWeekBRL}}</li>
+            <li>Mensal: {{this.goldPerMonthBRL}}</li>
+          </ul> 
+
+          <button type="button" @click="back">Voltar</button>
+        </div>
+      </div>
+    </div>
+    
+  <script src="assets/js/masker.js"></script> 
+  <script src="assets/js/vue.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+ 
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          goldPrice: '',
+          goldFarming: '', 
+          screen1: true,
+          screen2: false,
+          screen3: false,
+          goldPerDay: 0,
+          goldPerWeek: 0,
+          goldPerMonth: 0,
+
+          goldPerDayBRL: 0,
+          goldPerWeekBRL: 0,
+          goldPerMonthBRL: 0,
+        }
+      },
+      mounted() {
+        let price =  this.$refs.price;
+        let gold =  this.$refs.gold;
+
+        VMasker(price).maskPattern('9,99');
+        VMasker(gold).maskMoney({
+            precision: 0,
+            separator: ' KK',
+            suffixUnit: 'KK'
+          })
+      },
+      methods: {
+
+        getPriceGold () {
+          this.screen1 = false;
+          this.screen2 = true;
+          this.screen3 = false;
+        },
+
+        goldForBRL(gold) {
+          let goldPrice = VMasker.toNumber(this.goldPrice) / 100
+
+	        return (gold*goldPrice) / 1000000
+        },
+
+        calc() {
+          this.screen1 = false;
+          this.screen2 = false;
+          this.screen3 = true;
+          
+          let goldPrice = VMasker.toNumber(this.goldPrice) / 100
+          
+          let goldDaily = VMasker.toNumber(this.goldFarming) * 1000000
+          
+          
+          this.goldPerDay = `${goldDaily / 1000000} KK` 
+          this.goldPerWeek = `${(goldDaily * 7) / 1000000} KK`
+          this.goldPerMonth = `${goldDaily * 30 / 1000000} KK`
+
+          this.goldPerDayBRL = `R$ ${this.goldForBRL(goldDaily)}`
+          this.goldPerWeekBRL = `R$ ${this.goldForBRL(goldDaily * 7)}`
+          this.goldPerMonthBRL = `R$ ${this.goldForBRL(goldDaily * 30)}`
+        },
+
+        back() {  
+          this.screen1 = true;
+          this.screen2 = false;
+          this.screen3 = false;
+
+          this.goldPrice = ''  
+          this.goldFarming = ''  
+        }
+      }
+    }).mount('#app')
+
+  </script>
+
+</body>
+</html>
