@@ -120,7 +120,14 @@
         },
 
         goldForBRL(gold) {
-          let goldPrice = VMasker.toNumber(this.goldPrice) / 100
+
+          let goldPrice = undefined
+
+          if (VMasker.toNumber(this.goldPrice).length < 3) { 
+            goldPrice = VMasker.toNumber(this.goldPrice) / 10
+          } else { 
+            goldPrice = VMasker.toNumber(this.goldPrice) / 100
+          }
 
 	        return (gold*goldPrice) / 1000000
         },
@@ -129,9 +136,7 @@
           this.screen1 = false;
           this.screen2 = false;
           this.screen3 = true;
-          
-          let goldPrice = VMasker.toNumber(this.goldPrice) / 100
-          
+            
           let goldDaily = VMasker.toNumber(this.goldFarming) * 1000000
           
           

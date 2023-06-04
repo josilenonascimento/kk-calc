@@ -1,20 +1,27 @@
 const staticCacheName = 'kk-calc-v1'
 
 const resourcesToPrecache = [
+    '/kk-calc/', 
     '/index.html',
     '/assets/css/style-v001.css',
     '/assets/images/background.png',
     '/assets/js/main.js',
     '/assets/js/masker.js',
     '/assets/js/vue.js',
-    '/assets/icons/android-chrome-96x96.png', 
-    '/assets/icons/apple-touch-icon.png', 
-    '/assets/icons/favicon-16x16.png', 
-    '/assets/icons/favicon-32x32.png', 
-    '/assets/icons/favicon.ico', 
-    '/assets/icons/icon.png', 
-    '/assets/icons/mstile-150x150.png', 
-    '/assets/icons/safari-pinned-tab.svg', 
+    '/assets/icons/icon-48x48.png', 
+    '/assets/icons/icon-72x72.png', 
+    '/assets/icons/icon-96x96.png', 
+    '/assets/icons/icon-128x128.png', 
+    '/assets/icons/icon-144x144.png', 
+    '/assets/icons/icon-152x152.png', 
+    '/assets/icons/icon-192x192.png', 
+    '/assets/icons/icon-384x384.png', 
+    '/assets/icons/icon-512x512.png' 
+]
+
+// CACHE FIRST
+
+// self neste caso se refere ao service worker, e não ao window (browser)
 ]
 
 // CACHE FIRST
