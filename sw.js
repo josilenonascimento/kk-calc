@@ -1,4 +1,4 @@
-const staticCacheName = 'kk-calc-v1'
+const staticCacheName = 'kk-calc-v2'
 
 const resourcesToPrecache = [
     '/kk-calc/', 
